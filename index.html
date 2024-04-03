@@ -4,7 +4,14 @@
     <title>Chat App</title>
   </head>
   <link rel="stylesheet" href="style.css" />
-  <body>
+
+ 
+
+  <body id="body">
+    <button type="button" id="bull" onclick="changecolor()">
+      기분전환 하고 싶으면 눌러 보세요
+    </button>
+
     <div id="chat"></div>
     <div id="inputBox">
       <input type="text" id="messageInput" placeholder="Type a message..." />
@@ -12,10 +19,11 @@
     </div>
 
     <script>
-      const ws = new WebSocket("ws://localhost:8080");
-      const chat = document.getElementById("chat");
-      const messageInput = document.getElementById("messageInput");
-
+      const ws = new WebSocket('ws://192.168.207.238:8080');
+      const chat = document.getElementById('chat');
+      const messageInput = document.getElementById('messageInput');
+      const bull = document.getElementById('bull');
+      let check = true;
       ws.onmessage = function (event) {
         // event.data가 Blob 인스턴스일 경우 FileReader를 사용해서 읽어오기
         if (event.data instanceof Blob) {
@@ -38,6 +46,15 @@
         const message = messageInput.value;
         ws.send(message);
         messageInput.value = "";
+      }
+      function changecolor() {
+        if (check === true) {
+          document.getElementById('body').classList.add('hi');
+          check = !check;
+        } else {
+          document.getElementById('body').classList.remove('hi');
+          check = !check;
+        }
       }
     </script>
   </body>
