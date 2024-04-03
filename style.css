@@ -58,3 +58,7 @@ body {
   background-color: crimson;
   border: 1px solid black;
 }
+
+p {
+  width: 1px;
+}
