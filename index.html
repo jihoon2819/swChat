@@ -3,30 +3,30 @@
   <head>
     <title>Chat App</title>
   </head>
-  <link rel="stylesheet" href="style.css" />n
+  <link rel="stylesheet" href="style.css" />
   <body>
     <div id="chat"></div>
     <input type="text" id="messageInput" placeholder="Type a message..." />
     <button onclick="sendMessage()">Send</button>
 
     <script>
-      const ws = new WebSocket('ws://192.168.207.238:8080');
-      const chat = document.getElementById('chat');
-      const messageInput = document.getElementById('messageInput');
+      const ws = new WebSocket("ws://192.168.207.238:8080");
+      const chat = document.getElementById("chat");
+      const messageInput = document.getElementById("messageInput");
 
       ws.onmessage = function (event) {
         // event.data가 Blob 인스턴스일 경우 FileReader를 사용해서 읽어오기
         if (event.data instanceof Blob) {
           const reader = new FileReader();
           reader.onload = function () {
-            const message = document.createElement('p');
+            const message = document.createElement("p");
             message.textContent = reader.result;
             chat.appendChild(message);
           };
           reader.readAsText(event.data);
         } else {
           // 메시지가 문자열인 경우, 직접 표시
-          const message = document.createElement('p');
+          const message = document.createElement("p");
           message.textContent = event.data;
           chat.appendChild(message);
         }
@@ -35,7 +35,7 @@
       function sendMessage() {
         const message = messageInput.value;
         ws.send(message);
-        messageInput.value = '';
+        messageInput.value = "";
       }
     </script>
   </body>
