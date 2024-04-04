@@ -58,3 +58,24 @@ body {
   background-color: crimson;
   border: 1px solid black;
 }
+
+#chat {
+  border: 1px solid #0b0909;
+  border-radius: 5px;
+  padding: 40px;
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+#chat p {
+  background-color: #f2f2f2;
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin: 5px 0;
+  max-width: 70%;
+}
+
+#chat p:last-child {
+  margin-bottom: 0;
+}
