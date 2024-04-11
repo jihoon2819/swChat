@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="style.css" />n
   <body>
     <div id="chat"></div>
-    <input type="text" id="messageInput" placeholder="Type a message..." />
+    <input type="text" id="messageInput" placeholder="이곳에 메세지를 입력하세요" />
     <button onclick="sendMessage()">Send</button>
 
     <script>
@@ -31,12 +31,21 @@
           chat.appendChild(message);
         }
       };
-
-      function sendMessage() {
-        const message = messageInput.value;
-        ws.send(message);
-        messageInput.value = '';
+      
+      // 메시지 전송 함수
+        function sendMessage() {
+        const message = messageInput.value.trim(); // 입력된 메시지에서 앞뒤 공백을 제거하여 가져옵니다.
+        
+        // 메시지가 비어있지 않은 경우에만 전송
+        if (message !== '') {
+          ws.send(message); // WebSocket을 통해 메시지 전송
+          messageInput.value = ''; // 입력란 초기화
+        } else {
+          // 메시지가 공백 문자열인 경우 아무 작업도 수행하지 않음
+          console.log('공백 메시지는 전송할 수 없습니다.');
+        }
       }
+
     </script>
   </body>
 </html>
