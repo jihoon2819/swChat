@@ -19,11 +19,13 @@
     <button onclick="sendMessage()">Send</button>
 
     <script>
-      const ws = new WebSocket('ws://192.168.207.238:8080');
+      const ws = new WebSocket('ws://localhost:8080');
       const chat = document.getElementById('chat');
       const messageInput = document.getElementById('messageInput');
       const bull = document.getElementById('bull');
       let check = true;
+      
+      
       ws.onmessage = function (event) {
         // event.data가 Blob 인스턴스일 경우 FileReader를 사용해서 읽어오기
         if (event.data instanceof Blob) {
@@ -41,20 +43,21 @@
           chat.appendChild(message);
         }
       };
-      
-      // 메시지 전송 함수
-        function sendMessage() {
-        const message = messageInput.value.trim(); // 입력된 메시지에서 앞뒤 공백을 제거하여 가져옵니다.
-        
-        // 메시지가 비어있지 않은 경우에만 전송
-        if (message !== '') {
-          ws.send(message); // WebSocket을 통해 메시지 전송
-          messageInput.value = ''; // 입력란 초기화
-        } else {
-          // 메시지가 공백 문자열인 경우 아무 작업도 수행하지 않음
-          console.log('공백 메시지는 전송할 수 없습니다.');
-        }
+
+      function sendMessage() {
+        const message = messageInput.value;
+        const currentTime = new Date().toLocaleTimeString(); // 현재 시간 가져오기
+        const messageWithTime = `[${currentTime}] ${message}`; // 시간과 메시지 결합
+        ws.send(messageWithTime);
+        messageInput.value = '';
       }
+
+      // Enter 키를 눌렀을 때 sendMessage 함수를 호출하는 이벤트 핸들러 추가
+      messageInput.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+         sendMessage();
+       }
+     });
 
       function changecolor() {
         if (check === true) {
