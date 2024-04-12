@@ -15,6 +15,9 @@
     </div>
     <div id="chat"></div>
 
+    <input type="text" id="messageInput" placeholder="이곳에 메세지를 입력하세요" />
+    <button onclick="sendMessage()">Send</button>
+
     <script>
       const ws = new WebSocket('ws://localhost:8080');
       const chat = document.getElementById('chat');
@@ -54,7 +57,7 @@
         if (event.key === 'Enter') {
          sendMessage();
        }
-    });
+     });
 
       function changecolor() {
         if (check === true) {
