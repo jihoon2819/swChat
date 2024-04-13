@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Chat App</title>
+    <title>chatting service</title>
   </head>
   <link rel="stylesheet" href="style.css" />
 
@@ -11,34 +11,37 @@
     </button>
     <div id="inputBox">
       <input type="text" id="messageInput" placeholder="Type a message..." />
-      <button onclick="sendMessage()">Send</button>
+      <button onclick="limitWord()">Send</button>
     </div>
     <div id="chat"></div>
 
-    <input type="text" id="messageInput" placeholder="이곳에 메세지를 입력하세요" />
-    <button onclick="sendMessage()">Send</button>
+    <input
+      type="text"
+      id="messageInput"
+      placeholder="이곳에 메세지를 입력하세요"
+    />
+    <button onclick="limitWord()">Send</button>
 
     <script>
-      const ws = new WebSocket('ws://localhost:8080');
-      const chat = document.getElementById('chat');
-      const messageInput = document.getElementById('messageInput');
-      const bull = document.getElementById('bull');
+      const ws = new WebSocket("ws://localhost:8080");
+      const chat = document.getElementById("chat");
+      const messageInput = document.getElementById("messageInput");
+      const bull = document.getElementById("bull");
       let check = true;
-      
-      
+
       ws.onmessage = function (event) {
         // event.data가 Blob 인스턴스일 경우 FileReader를 사용해서 읽어오기
         if (event.data instanceof Blob) {
           const reader = new FileReader();
           reader.onload = function () {
-            const message = document.createElement('p');
+            const message = document.createElement("p");
             message.textContent = reader.result;
             chat.appendChild(message);
           };
           reader.readAsText(event.data);
         } else {
           // 메시지가 문자열인 경우, 직접 표시
-          const message = document.createElement('p');
+          const message = document.createElement("p");
           message.textContent = event.data;
           chat.appendChild(message);
         }
@@ -49,22 +52,35 @@
         const currentTime = new Date().toLocaleTimeString(); // 현재 시간 가져오기
         const messageWithTime = `[${currentTime}] ${message}`; // 시간과 메시지 결합
         ws.send(messageWithTime);
-        messageInput.value = '';
+        messageInput.value = "";
+      }
+
+      //금지어 포함 여부 확인
+      function limitWord() {
+        const message = messageInput.value;
+
+        const matching_msg = /(ㅅㅂ|시[발바]|병신)/;
+
+        if (matching_msg.test(message)) {
+          alert("금지어가 포함되어 있습니다. 다시 작성해주세요");
+        } else {
+          sendMessage();
+        }
       }
 
       // Enter 키를 눌렀을 때 sendMessage 함수를 호출하는 이벤트 핸들러 추가
-      messageInput.addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-         sendMessage();
-       }
-     });
+      messageInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          limitWord();
+        }
+      });
 
       function changecolor() {
         if (check === true) {
-          document.getElementById('body').classList.add('hi');
+          document.getElementById("body").classList.add("hi");
           check = !check;
         } else {
-          document.getElementById('body').classList.remove('hi');
+          document.getElementById("body").classList.remove("hi");
           check = !check;
         }
       }
