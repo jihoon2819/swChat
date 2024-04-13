@@ -2,8 +2,21 @@
   box-sizing: border-box;
   margin: 0 0;
 }
+@keyframes waveAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 body {
-  background: linear-gradient(to bottom right, #fff8e1, #e6c9a8);
+  background: linear-gradient(270deg, #b2b2f7, #0099ff, #00ccff, #0033ff);
+  background-size: 400% 400%;
+  animation: waveAnimation 1s ease infinite;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -20,7 +33,9 @@ body {
   font-weight: 900;
 }
 .hi {
-  background: linear-gradient(to bottom right, #e1fffb, #27cf70);
+  background: linear-gradient(270deg, #be6c34, #740808, #a8f002, #ff0000);
+  background-size: 400% 400%;
+  animation: waveAnimation 1s ease infinite;
 }
 
 #inputBox {
@@ -58,14 +73,39 @@ body {
   background-color: crimson;
   border: 1px solid black;
 }
-
+@keyframes rainbowFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 #chat {
   border: 1px solid #0b0909;
   border-radius: 5px;
   padding: 40px;
   margin-top: 20px;
-  max-height: 400px;
+  min-height: 400px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background: linear-gradient(
+    270deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
+  background-size: 200% 200%;
+  animation: rainbowFlow 8s ease infinite;
 }
 
 #chat p {
