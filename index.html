@@ -1,97 +1,116 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>chatting service</title>
-  </head>
-  <link rel="stylesheet" href="style.css" />
 
-  <body id="body">
-    <button type="button" id="bull" onclick="changecolor()">
-      기분전환 하고 싶으면 눌러 보세요
-    </button>
+<head>
+  <title>chatting service</title>
+</head>
+<link rel="stylesheet" href="style.css" />
 
-    <div id="chat">
-      <div id="inputBox">
-        <input
-          type="text"
-          id="messageInput"
-          placeholder="이곳에 메세지를 입력하세요"
-        />
-        <button onclick="limitWord()">Send</button>
-      </div>
+<body id="body">
+  <button type="button" id="bull" onclick="changecolor()">
+    기분전환 하고 싶으면 눌러 보세요.
+  </button>
+
+  <h1 id="spinner-title">피젯스피너</h1>
+  <div id="wheel">
+    <div class="wheel-item">
+      <img id="spinner" src="./pijetttt.png" alt="" width="170px">
     </div>
+  </div>
 
-    <script>
-      const ws = new WebSocket('ws://192.168.35.61:8080');
-      const chat = document.getElementById('chat');
-      const messageInput = document.getElementById('messageInput');
-      const bull = document.getElementById('bull');
-      let check = true;
 
-      ws.onmessage = function (event) {
-        // event.data가 Blob 인스턴스일 경우 FileReader를 사용해서 읽어오기
-        if (event.data instanceof Blob) {
-          const reader = new FileReader();
-          reader.onload = function () {
-            const message = document.createElement('p');
-            message.textContent = reader.result;
-            chat.appendChild(message);
-          };
-          reader.readAsText(event.data);
-        } else {
-          // 메시지가 문자열인 경우, 직접 표시
+  <div id="chat">
+    <div id="inputBox">
+      <input type="text" id="messageInput" placeholder="이곳에 메세지를 입력하세요" />
+      <button onclick="limitWord()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const ws = new WebSocket('ws://192.168.35.61:8080');
+    const chat = document.getElementById('chat');
+    const messageInput = document.getElementById('messageInput');
+    const bull = document.getElementById('bull');
+    let check = true;
+
+    ws.onmessage = function (event) {
+      // event.data가 Blob 인스턴스일 경우 FileReader를 사용해서 읽어오기
+      if (event.data instanceof Blob) {
+        const reader = new FileReader();
+        reader.onload = function () {
           const message = document.createElement('p');
-          message.textContent = event.data;
+          message.textContent = reader.result;
           chat.appendChild(message);
-        }
-      };
-
-      function sendMessage() {
-        const message = messageInput.value;
-        const currentTime = new Date().toLocaleTimeString(); // 현재 시간 가져오기
-        const messageWithTime = `[${currentTime}] ${message}`; // 시간과 메시지 결합
-        ws.send(messageWithTime);
-        messageInput.value = '';
+        };
+        reader.readAsText(event.data);
+      } else {
+        // 메시지가 문자열인 경우, 직접 표시
+        const message = document.createElement('p');
+        message.textContent = event.data;
+        chat.appendChild(message);
       }
-      ws.onopen = function () {
-        console.log('WebSocket connection established');
-      };
-      ws.onclose = function () {
-        console.log('WebSocket connection closed');
-      };
-      ws.onerror = function (event) {
-        console.error('WebSocket error observed:', event);
-      };
+    };
 
-      //금지어 포함 여부 확인
-      function limitWord() {
-        const message = messageInput.value;
+    function sendMessage() {
+      const message = messageInput.value;
+      const currentTime = new Date().toLocaleTimeString(); // 현재 시간 가져오기
+      const messageWithTime = `[${currentTime}] ${message}`; // 시간과 메시지 결합
+      ws.send(messageWithTime);
+      messageInput.value = '';
+    }
+    ws.onopen = function () {
+      console.log('WebSocket connection established');
+    };
+    ws.onclose = function () {
+      console.log('WebSocket connection closed');
+    };
+    ws.onerror = function (event) {
+      console.error('WebSocket error observed:', event);
+    };
 
-        const matching_msg = /(ㅅㅂ|시[발바]|병신)/;
+    //금지어 포함 여부 확인
+    function limitWord() {
+      const message = messageInput.value;
 
-        if (matching_msg.test(message)) {
-          alert('금지어가 포함되어 있습니다. 다시 작성해주세요');
-        } else {
-          sendMessage();
-        }
+      const matching_msg = /(ㅅㅂ|시[발바]|병신)/;
+
+      if (matching_msg.test(message)) {
+        alert('금지어가 포함되어 있습니다. 다시 작성해주세요');
+      } else {
+        sendMessage();
       }
+    }
 
-      // Enter 키를 눌렀을 때 sendMessage 함수를 호출하는 이벤트 핸들러 추가
-      messageInput.addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-          limitWord();
-        }
-      });
-
-      function changecolor() {
-        if (check === true) {
-          document.getElementById('body').classList.add('hi');
-          check = !check;
-        } else {
-          document.getElementById('body').classList.remove('hi');
-          check = !check;
-        }
+    // Enter 키를 눌렀을 때 sendMessage 함수를 호출하는 이벤트 핸들러 추가
+    messageInput.addEventListener('keypress', function (event) {
+      if (event.key === 'Enter') {
+        limitWord();
       }
-    </script>
-  </body>
+    });
+
+    function changecolor() {
+      if (check === true) {
+        document.getElementById('body').classList.add('hi');
+        check = !check;
+      } else {
+        document.getElementById('body').classList.remove('hi');
+        check = !check;
+      }
+    }
+
+    let rotating = true;
+
+    document.getElementById('spinner').addEventListener('click', function () {
+      const wheel = document.getElementById('wheel');
+      if (rotating) {
+        wheel.style.animationPlayState = 'paused';
+      } else {
+        wheel.style.animationPlayState = 'running';
+      }
+      rotating = !rotating;
+    });
+
+  </script>
+</body>
+
 </html>
