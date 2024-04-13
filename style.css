@@ -2,17 +2,21 @@
   box-sizing: border-box;
   margin: 0 0;
 }
+
 @keyframes waveAnimation {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
 }
+
 body {
   background: linear-gradient(270deg, #b2b2f7, #0099ff, #00ccff, #0033ff);
   background-size: 400% 400%;
@@ -23,6 +27,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 #bull {
   width: 400px;
   height: 50px;
@@ -32,6 +37,7 @@ body {
   background-color: deeppink;
   font-weight: 900;
 }
+
 .hi {
   background: linear-gradient(270deg, #be6c34, #740808, #a8f002, #ff0000);
   background-size: 400% 400%;
@@ -47,21 +53,22 @@ body {
   background-color: rgb(104, 100, 100, 0.5);
 }
 
-#inputBox > #messageInput {
+#inputBox>#messageInput {
   border-radius: 5px;
   width: 50px;
   transition: all 0.3s ease-in-out;
 }
 
-#inputBox > #messageInput:hover {
+#inputBox>#messageInput:hover {
   background-color: rgb(167, 230, 148);
 }
 
-#inputBox > #messageInput:focus {
+#inputBox>#messageInput:focus {
   background-color: rgb(167, 230, 148);
   width: 200px;
 }
-#inputBox > button {
+
+#inputBox>button {
   width: 60px;
   height: 30px;
   border: 1px solid black;
@@ -69,21 +76,25 @@ body {
   transition: all 0.2s ease-in-out;
 }
 
-#inputBox > button:hover {
+#inputBox>button:hover {
   background-color: crimson;
   border: 1px solid black;
 }
+
 @keyframes rainbowFlow {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
 }
+
 #chat {
   border: 1px solid #0b0909;
   border-radius: 5px;
@@ -94,16 +105,14 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  background: linear-gradient(
-    270deg,
-    red,
-    orange,
-    yellow,
-    green,
-    blue,
-    indigo,
-    violet
-  );
+  background: linear-gradient(270deg,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet);
   background-size: 200% 200%;
   animation: rainbowFlow 8s ease infinite;
 }
@@ -114,9 +123,37 @@ body {
   border-radius: 10px;
   margin: 5px 0;
   max-width: 70%;
-  word-wrap: break-word; /* 줄바꿈 */
+  word-wrap: break-word;
+  /* 줄바꿈 */
 }
 
 #chat p:last-child {
   margin-bottom: 0;
+}
+
+#wheel {
+  position: fixed;
+  top: 130px;
+  left: 200px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  animation: rotate 0.5s infinite linear;
+}
+
+#spinner-title {
+  position: fixed;
+  top: 50px;
+  left: 280px;
+  transform-origin: top left;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
 }
