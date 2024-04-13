@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Chat App</title>
+    <title>chatting service</title>
   </head>
   <link rel="stylesheet" href="style.css" />
   <body>
     <div id="chat"></div>
     <input type="text" id="messageInput" placeholder="Type a message..." />
-    <button onclick="sendMessage()">Send</button>
+    <button onclick="limitWord()">Send</button>
 
     <script>
       const ws = new WebSocket("ws://192.168.207.238:8080");
@@ -36,6 +36,18 @@
         const message = messageInput.value;
         ws.send(message);
         messageInput.value = "";
+      }
+
+      function limitWord() {
+        const message = messageInput.value;
+
+        const matching_msg = /(ㅅㅂ|시[발바]|병신)/;
+
+        if (matching_msg.test(message)) {
+          alert("금지어가 포함되어 있습니다. 다시 작성해주세요");
+        } else {
+          sendMessage();
+        }
       }
     </script>
   </body>
