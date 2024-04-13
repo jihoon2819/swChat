@@ -1,0 +1,82 @@
+* {
+  box-sizing: border-box;
+  margin: 0 0;
+}
+body {
+  background: linear-gradient(to bottom right, #fff8e1, #e6c9a8);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#bull {
+  width: 400px;
+  height: 50px;
+  font-size: 20px;
+  border-radius: 5px;
+  border: blanchedalmond 1px dotted;
+  background-color: deeppink;
+  font-weight: 900;
+}
+.hi {
+  background: linear-gradient(to bottom right, #e1fffb, #27cf70);
+}
+
+#inputBox {
+  text-align: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 300px;
+  height: 30px;
+  background-color: rgb(104, 100, 100, 0.5);
+}
+
+#inputBox > #messageInput {
+  border-radius: 5px;
+  width: 50px;
+  transition: all 0.3s ease-in-out;
+}
+
+#inputBox > #messageInput:hover {
+  background-color: rgb(167, 230, 148);
+}
+
+#inputBox > #messageInput:focus {
+  background-color: rgb(167, 230, 148);
+  width: 200px;
+}
+#inputBox > button {
+  width: 60px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+#inputBox > button:hover {
+  background-color: crimson;
+  border: 1px solid black;
+}
+
+#chat {
+  border: 1px solid #0b0909;
+  border-radius: 5px;
+  padding: 40px;
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+#chat p {
+  background-color: #f2f2f2;
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin: 5px 0;
+  max-width: 70%;
+  word-wrap: break-word; /* 줄바꿈 */
+}
+
+#chat p:last-child {
+  margin-bottom: 0;
+}
